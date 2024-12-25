@@ -109,7 +109,7 @@ const forgotpassword = async (req, res) => {
     .createHash('sha256')
     .update(resetToken)
     .digest('hex');
-  user.resetPasswordExpire = new Date(Date.now() + 5 * 60 * 1000);
+  user.resetPasswordExpire = Date.now() + 5 * 60 * 1000;
 
   await user.save({ validateBeforeSave: false });
 
@@ -153,6 +153,16 @@ const forgotpassword = async (req, res) => {
   }
 };
 
-const resetpassword = async (req, res) => {};
+const resetpassword = async (req, res) => {
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+    const user = await User.findOne({
+        resetPasswordToken,
+        resetPasswordExpire: { $gt: Date.now() },
+    })
+};
 
 module.exports = { register, login, logout, forgotpassword, resetpassword };
