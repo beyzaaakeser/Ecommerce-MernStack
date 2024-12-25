@@ -159,10 +159,42 @@ const resetpassword = async (req, res) => {
     .update(req.params.token)
     .digest('hex');
 
-    const user = await User.findOne({
-        resetPasswordToken,
-        resetPasswordExpire: { $gt: Date.now() },
-    })
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return res.status(404).json({ message: 'Invalid reset password token' });
+  }
+
+  user.password = req.body.password;
+  user.resetPasswordExpire = undefined;
+  user.resetPasswordToken = undefined;
+
+  await user.save();
+
+  const token = jwt.sign({ id: user._id }, 'SECRETTOKEN', { expiresIn: '1h' });
+
+  const cookieOptions = {
+    httpOnly: true,
+    expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+  };
+  res.status(200).cookie('token', token, cookieOptions).json(user, token);
 };
 
-module.exports = { register, login, logout, forgotpassword, resetpassword };
+const userDetail = async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  res.status(200).json({
+    user,
+  });
+};
+
+module.exports = {
+  register,
+  login,
+  logout,
+  forgotpassword,
+  resetpassword,
+  userDetail,
+};
