@@ -10,18 +10,21 @@ const Home = () => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  console.log(products, loading, 'ürünler');
   return (
     <>
-      {loading
-        ? 'Loading...'
-        : products?.products && (
-            <div className="">
+      {loading ? (
+        'Loading...'
+      ) : (
+        <div>
+          {products?.products && (
+            <div className="flex items-center justify-center gap-5 my-5 flex-wrap">
               {products?.products?.map((product, index) => (
                 <ProductCard product={product} key={index} />
               ))}
             </div>
           )}
+        </div>
+      )}
     </>
   );
 };

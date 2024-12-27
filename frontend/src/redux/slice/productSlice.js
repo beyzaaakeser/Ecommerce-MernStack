@@ -1,11 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const initialState = { products: [], loading: false };
+const initialState = { products: [], product: {}, loading: false };
 
 export const getProducts = createAsyncThunk('products', async () => {
   const response = await fetch('http://localhost:4000/products');
   const data = await response.json();
   return data;
+});
+export const getProductDetail = createAsyncThunk('product', async (id) => {
+  const response = await fetch(`http://localhost:4000/products/${id}`);
+  return await response.json();
 });
 
 const productSlice = createSlice({
@@ -19,6 +23,13 @@ const productSlice = createSlice({
     builder.addCase(getProducts.fulfilled, (state, action) => {
       state.loading = false;
       state.products = action.payload;
+    });
+    builder.addCase(getProductDetail.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(getProductDetail.fulfilled, (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
     });
   },
 });

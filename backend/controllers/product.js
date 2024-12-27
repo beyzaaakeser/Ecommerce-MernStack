@@ -26,7 +26,7 @@ const detailProducts = async (req, res) => {
   const product = await Product.findById(req.params.id);
 
   res.status(200).json({
-    produc,
+    product,
   });
 };
 
