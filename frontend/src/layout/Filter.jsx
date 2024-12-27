@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Filter = () => {
+const Filter = ({ setPrice, setRating, setCategory }) => {
   const categoryList = [
     'Bags',
     'Shoes',
@@ -24,11 +24,17 @@ const Filter = () => {
       <div className="text-xl font-[400] mb-2">Filter by Price</div>
       <div className="flex items-center max-sm:gap-2 sm:gap-4 my-4">
         <input
+          onChange={(e) =>
+            setPrice((prev) => ({ ...prev, min: e.target.value }))
+          }
           className="border w-16 outline-none p-1 text-center rounded-sm"
           type="number"
           placeholder="Min"
         />
         <input
+          onChange={(e) =>
+            setPrice((prev) => ({ ...prev, max: e.target.value }))
+          }
           className="border w-16 outline-none p-1 text-center rounded-sm"
           type="number"
           placeholder="Max"
@@ -36,14 +42,22 @@ const Filter = () => {
       </div>
       <div className="text-xl font-[400] mb-2">Filter by Category</div>
       {categoryList.map((category, index) => (
-        <div className="text-md cursor-pointer" key={index}>
+        <div
+          onClick={() => setCategory(category)}
+          className="text-md cursor-pointer"
+          key={index}
+        >
           {category}
         </div>
       ))}
-      <hr className='my-3 w-[200px]'/>
+      <hr className="my-3 w-[200px]" />
       <div className="text-xl font-[400] mb-2 ">Filter by Rating Score</div>
       {ratingList.map((rating, index) => (
-        <div className="text-md cursor-pointer" key={index}>
+        <div
+          onClick={() => setRating(rating)}
+          className="text-md cursor-pointer"
+          key={index}
+        >
           {rating}
         </div>
       ))}

@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { SlBasket } from 'react-icons/sl';
 import { IoMdSearch } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getKeyword } from '../redux/slice/generalSlice';
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const menuItems = [
     {
       name: 'Profile',
@@ -20,6 +24,12 @@ const Header = () => {
       url: '/logout',
     },
   ];
+
+  const keywordFunc = () => {
+    dispatch(getKeyword(keyword));
+    setKeyword('');
+    navigate('/products');
+  };
   return (
     <div className="bg-gray-100 h-16 px-5 flex items-center justify-between">
       <Link to="/" className="text-4xl ">
@@ -28,11 +38,13 @@ const Header = () => {
       <div className="flex items-center gap-5 ">
         <div className="flex items-center ">
           <input
+            onChange={(e) => setKeyword(e.target.value)}
+            value={keyword}
             className="p-2 outline-none"
             type="text"
             placeholder="Search here..."
           />
-          <div className="ml-1 cursor-pointer bg-white">
+          <div className="ml-1 cursor-pointer bg-white" onClick={keywordFunc}>
             <IoMdSearch className="text-2xl m-2 " />
           </div>
         </div>
