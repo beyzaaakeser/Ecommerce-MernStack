@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
+  const [keyword, setKeyword] = useState("");
   const menuItems = [
     {
       name: 'Profile',
@@ -43,10 +44,10 @@ const Header = () => {
             className="size-8 rounded-full cursor-pointer"
           />
           {openMenu && (
-            <div className="absolute right-0 mt-4 w-[200px] bg-gray-100/50 shadow-md shadow-amber-500/50">
+            <div className="absolute right-0 mt-4 w-[200px] bg-gray-100 shadow-lg shadow-amber-500/80">
               {menuItems.map((item, index) => (
                 <div
-                  className="px-2 py-1 hover:bg-gray-200/50 cursor-pointer"
+                  className="px-2 py-1 hover:bg-gray-200 cursor-pointer"
                   key={index}
                 >
                   {item.name}

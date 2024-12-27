@@ -11,7 +11,15 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <div className='min-h-screen'>
+      <div className='bg-[#111111]'>
+        <img
+          src="../../public/banner1.jpg"
+          className="w-full h-[500px] object-contain
+        "
+        />
+      </div>
+
       {loading ? (
         'Loading...'
       ) : (
@@ -25,7 +33,7 @@ const Home = () => {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

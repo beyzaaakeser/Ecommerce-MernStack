@@ -43,7 +43,7 @@ const Detail = () => {
       {loading ? (
         'Loading...'
       ) : (
-        <div className="">
+        <div className="min-h-screen">
           <div className="flex mt-4 justify-center gap-5">
             {product?.product && (
               <div className="w-[400px] ">
