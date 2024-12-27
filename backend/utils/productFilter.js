@@ -24,7 +24,7 @@ class ProductFilter {
     // deleteArea.forEach(item => delete(queryCopy[item]))
     deleteArea.forEach((item) => delete queryCopy[item]);
 
-    const queryStr = JSON.stringify(queryCopy);
+    let queryStr = JSON.stringify(queryCopy);
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
 
     this.query = this.query.find(JSON.parse(queryStr));
@@ -33,7 +33,7 @@ class ProductFilter {
   pagination(resultPerPage) {
     const activePage = this.queryStr.page || 1;
     const skip = resultPerPage * (activePage - 1);
-    this.query = this.query.limitt(resultPerPage).skip(skip);
+    this.query = this.query.limit(resultPerPage).skip(skip);
     return this;
   }
 }
