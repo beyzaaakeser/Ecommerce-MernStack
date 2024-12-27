@@ -7,12 +7,14 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Detail from './pages/Detail';
 import AllProducts from './pages/AllProducts';
+import Auth from './pages/Auth';
 const App = () => {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<Auth />} />
         <Route path="/products" element={<AllProducts />} />
         <Route path="/product/:id" element={<Detail />} />
       </Routes>

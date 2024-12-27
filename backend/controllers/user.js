@@ -1,6 +1,6 @@
 const User = require('../models/user.js');
 const bcrypt = require('bcryptjs');
-const jwt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const cloudinary = require('cloudinary').v2;
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');

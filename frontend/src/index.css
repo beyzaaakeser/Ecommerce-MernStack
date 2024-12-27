@@ -5,3 +5,50 @@
 body {
   user-select: none;
 }
+
+/* Ana konteyner: yan yana dizilim */
+.pagination-container {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+/* Sayfa numaraları için genel stil */
+.pagination-page {
+  margin: 0 5px; /* Yanlarındaki boşluk */
+}
+
+.pagination-link {
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination-link:hover {
+  background-color: #f0f0f0;
+}
+
+/* Önceki ve sonraki butonlar */
+.pagination-previous,
+.pagination-next {
+  margin: 0 10px;
+}
+
+/* Aktif sayfa */
+.active .pagination-link {
+  background-color: #f59e0b;
+  color: #fff;
+  border-color: #d68b09;
+}
+
+/* Ara vermeler (...) */
+.pagination-break {
+  margin: 0 5px;
+  color: #999;
+}

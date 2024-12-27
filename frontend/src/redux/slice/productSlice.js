@@ -15,13 +15,13 @@ export const getSearchProducts = createAsyncThunk(
 
     if (params.category) {
       link = `http://localhost:4000/products?keyword=${
-        params.keyword
+        params.keyword || ''
       }&rating[gte]=${params.rating || 0}&price[gte]=${
         params.price.min || 0
       }&price[lte]=${params.price.max || 30000}&category=${params.category}`;
     } else {
       link = `http://localhost:4000/products?keyword=${
-        params.keyword
+        params.keyword || ''
       }&rating[gte]=${params.rating || 0}&price[gte]=${
         params.price.min || 0
       }&price[lte]=${params.price.max || 30000}`;
