@@ -6,12 +6,14 @@ import Footer from './layout/Footer';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Detail from './pages/Detail';
+import AllProducts from './pages/AllProducts';
 const App = () => {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/products" element={<AllProducts />} />
         <Route path="/product/:id" element={<Detail />} />
       </Routes>
       <Footer />

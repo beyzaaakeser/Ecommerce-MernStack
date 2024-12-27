@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SlBasket } from 'react-icons/sl';
-import { IoMdSearch } from "react-icons/io";
+import { IoMdSearch } from 'react-icons/io';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -20,7 +21,9 @@ const Header = () => {
   ];
   return (
     <div className="bg-gray-100 h-16 px-5 flex items-center justify-between">
-      <div className="text-4xl ">E.com</div>
+      <Link to="/" className="text-4xl ">
+        E.com
+      </Link>
       <div className="flex items-center gap-5 ">
         <div className="flex items-center ">
           <input
