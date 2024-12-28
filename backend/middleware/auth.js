@@ -2,22 +2,31 @@ const User = require('../models/user.js');
 const jwt = require('jsonwebtoken');
 
 const authenticationMid = async (req, res, next) => {
-  const { token } = req.cookies;
-  if (!token) {
-    return res
-      .status(401)
-      .json({ message: 'You must be logged in to access this app!' });
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res
+        .status(401)
+        .json({ message: 'Authorization header is missing!' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: 'You must be logged in to access this app!' });
+    }
+
+    const decodedData = jwt.verify(token, 'SECRETTOKEN');
+    if (!decodedData) {
+      return res.status(401).json({ message: 'Invalid access token!' });
+    }
+
+    req.user = await User.findById(decodedData.id);
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error', error });
   }
-
-  const decodedData = jwt.verify(token, 'SECRETTOKEN');
-
-  if (!decodedData) {
-    return res.status(401).json({ message: 'Invalid access token!' });
-  }
-
-  req.user = await User.findById(decodedData.id);
-
-  next();
 };
 
 const rolechecked = (...roles) => {
@@ -31,4 +40,4 @@ const rolechecked = (...roles) => {
   };
 };
 
-module.exports = { authenticationMid , rolechecked};
+module.exports = { authenticationMid, rolechecked };

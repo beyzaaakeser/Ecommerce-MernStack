@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { SlBasket } from 'react-icons/sl';
 import { IoMdSearch } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getKeyword } from '../redux/slice/generalSlice';
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [keyword, setKeyword] = useState('');
+  const { user, isAuth } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const menuItems = [
@@ -30,6 +31,8 @@ const Header = () => {
     setKeyword('');
     navigate('/products');
   };
+
+
   return (
     <div className="bg-gray-100 h-16 px-5 flex items-center justify-between">
       <Link to="/" className="text-4xl ">
@@ -51,7 +54,11 @@ const Header = () => {
         <div className="relative">
           <img
             onClick={() => setOpenMenu(!openMenu)}
-            src="./public/user-profile.png"
+            src={
+              user?.user
+                ? user?.user?.avatar?.url
+                : '../../public/user-profile.png'
+            }
             alt=""
             className="size-8 rounded-full cursor-pointer"
           />
@@ -59,6 +66,7 @@ const Header = () => {
             <div className="absolute right-0 mt-4 w-[200px] bg-gray-100 shadow-lg shadow-amber-500/80">
               {menuItems.map((item, index) => (
                 <div
+                  onClick={() => (window.location = item.url)}
                   className="px-2 py-1 hover:bg-gray-200 cursor-pointer"
                   key={index}
                 >
