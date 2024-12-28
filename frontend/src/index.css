@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+/* body {
   user-select: none;
 }
-
+ */
 /* Ana konteyner: yan yana dizilim */
 .pagination-container {
   display: flex;

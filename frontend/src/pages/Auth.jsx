@@ -4,18 +4,36 @@ import Button from '../components/Button';
 import { useDispatch } from 'react-redux';
 
 const Auth = () => {
-  const [signUp, setSignUp] = useState(true);
-  const dispatch = useDispatch();
   const [data, setData] = useState({
     name: '',
     email: '',
     password: '',
     avatar: '',
   });
+  const [signUp, setSignUp] = useState(true);
+  const dispatch = useDispatch();
+
   const [preview, setPreview] = useState('../../public/user-profile.png');
   const regiterFunc = () => {};
   const loginFunc = () => {};
-  const handleChange = () => {};
+
+  const handleChange = (e) => {
+      if (e.target.name == 'avatar') {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setData((prev) => ({ ...prev, avatar: reader.result }));
+            setPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      } else {
+        console.log(data);
+        setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+      }
+  };
+
+  console.log(data, 'data');
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-sm:w-full max-sm:m-4 sm:w-1/3 sm:mx-auto -mt-20 p-4 border shadow rounded-md">
@@ -27,35 +45,35 @@ const Auth = () => {
             onChange={handleChange}
             value={data.name}
             type={'text'}
-            name={'name'}
-            id={''}
-            placeholder={'Name'}
+            name="name"
+            id={'1'}
+            placeholder="Name"
           />
         )}
         <Input
-        onChange={handleChange}
+          onChange={handleChange}
           value={data.email}
           type={'text'}
           name={'email'}
-          id={''}
+          id={'2'}
           placeholder={'Email'}
         />
         <Input
-        onChange={handleChange}
+          onChange={handleChange}
           value={data.password}
           type={'password'}
           name={'password'}
-          id={''}
+          id={'3'}
           placeholder={'Password'}
         />
         {signUp && (
           <div className="flex items-center gap-2 ">
             <img src={preview} className="size-10 rounded-full" />
             <Input
-            onChange={handleChange}
+              onChange={handleChange}
               type={'file'}
               name={'avatar'}
-              id={''}
+              id={'4'}
               placeholder={'Profile Picture'}
             />
           </div>
