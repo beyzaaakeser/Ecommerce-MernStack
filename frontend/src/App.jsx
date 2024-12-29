@@ -14,10 +14,13 @@ import Profile from './pages/Profile';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Cart from './pages/Cart';
+import Admin from './pages/Admin';
+
 
 const App = () => {
   const dispatch = useDispatch();
   const { isAuth, user } = useSelector((state) => state.user);
+
   useEffect(() => {
     dispatch(profile());
   }, [dispatch]);
@@ -32,6 +35,9 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/reset/:token" element={<ResetPassword />} />
+        {user?.user?.role == 'admin' && (
+          <Route path="/admin" element={<Admin />} />
+        )}
         <Route path="/products" element={<AllProducts />} />
         <Route path="/product/:id" element={<Detail />} />
       </Routes>

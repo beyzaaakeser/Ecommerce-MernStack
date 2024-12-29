@@ -73,7 +73,7 @@ export const profile = createAsyncThunk(
       }
 
       const result = await response.json();
-      console.log(result); // Burada yanıtı kontrol edin
+
       return result;
     } catch (error) {
       console.error('Profile fetch error:', error);
