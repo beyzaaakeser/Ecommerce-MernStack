@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getKeyword } from '../redux/slice/generalSlice';
 
 const Header = () => {
+   const { carts } = useSelector((state) => state.cart);
+   const { user, isAuth } = useSelector((state) => state.user);
   const [openMenu, setOpenMenu] = useState(false);
   const [keyword, setKeyword] = useState('');
-  const { user, isAuth } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const menuItems = [
@@ -31,7 +32,7 @@ const Header = () => {
     setKeyword('');
     navigate('/products');
   };
-  const menuFunc = (item,url) => {
+  const menuFunc = (item, url) => {
     if (item.name == 'Log out') {
       localStorage.removeItem('token');
       navigate('/');
@@ -83,10 +84,10 @@ const Header = () => {
             </div>
           )}
         </div>
-        <div className="relative">
+        <div onClick={() => navigate('/cart')} className="relative cursor-pointer">
           <SlBasket size={30} />
           <div className="absolute -top-2 -right-2 size-5 bg-amber-500 rounded-full flex items-center justify-center ">
-            4
+            {carts?.length || 0}
           </div>
         </div>
       </div>
