@@ -11,6 +11,8 @@ import Auth from './pages/Auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { profile } from './redux/slice/userSlice';
 import Profile from './pages/Profile';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -26,6 +28,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route path="/reset/:token" element={<ResetPassword />} />
         <Route path="/products" element={<AllProducts />} />
         <Route path="/product/:id" element={<Detail />} />
       </Routes>

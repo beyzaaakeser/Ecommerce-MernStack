@@ -82,6 +82,67 @@ export const profile = createAsyncThunk(
   }
 );
 
+export const forgotPassword = createAsyncThunk(
+  'forgot',
+  async (email, { rejectWithValue }) => {
+    try {
+      const response = await fetch('http://localhost:4000/forgotPassword', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        credentials: 'include', // Bu ayarı koruyoruz
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        return rejectWithValue(errorData.message || 'Registration failed');
+      }
+
+      const result = await response.json();
+      localStorage.setItem('token', result?.token);
+      return result;
+    } catch (error) {
+      console.error('Registration error:', error);
+      return rejectWithValue('Network error occurred');
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'reset',
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/reset/${params.token}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          credentials: 'include', // Bu ayarı koruyoruz
+          body: JSON.stringify({ password: params.password }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        return rejectWithValue(errorData.message || 'Registration failed');
+      }
+
+      const result = await response.json();
+      localStorage.setItem('token', result?.token);
+      return result;
+    } catch (error) {
+      console.error('Registration error:', error);
+      return rejectWithValue('Network error occurred');
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -125,6 +186,19 @@ const userSlice = createSlice({
     builder.addCase(profile.rejected, (state, action) => {
       state.loading = false;
       state.isAuth = false;
+      state.user = {};
+    });
+    builder.addCase(forgotPassword.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(forgotPassword.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(resetPassword.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(resetPassword.fulfilled, (state, action) => {
+      state.loading = false;
     });
   },
 });

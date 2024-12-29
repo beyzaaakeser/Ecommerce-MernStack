@@ -31,7 +31,14 @@ const Header = () => {
     setKeyword('');
     navigate('/products');
   };
-
+  const menuFunc = (item,url) => {
+    if (item.name == 'Log out') {
+      localStorage.removeItem('token');
+      navigate('/');
+    } else {
+      window.location = item.url;
+    }
+  };
 
   return (
     <div className="bg-gray-100 h-16 px-5 flex items-center justify-between">
@@ -66,7 +73,7 @@ const Header = () => {
             <div className="absolute right-0 mt-4 w-[200px] bg-gray-100 shadow-lg shadow-amber-500/80">
               {menuItems.map((item, index) => (
                 <div
-                  onClick={() => (window.location = item.url)}
+                  onClick={() => menuFunc(item, item.url)}
                   className="px-2 py-1 hover:bg-gray-200 cursor-pointer"
                   key={index}
                 >

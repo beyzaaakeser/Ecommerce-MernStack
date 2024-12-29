@@ -102,6 +102,14 @@ const Auth = () => {
             ? 'If you have an account please log in'
             : "If you don't have an account please sign up."}
         </div>
+        {!signUp && (
+          <div
+            className="text-red-600 text-md cursor-pointer text-end"
+            onClick={() => navigate('/forgotPassword')}
+          >
+            Forgot Password?
+          </div>
+        )}
 
         <div className="flex justify-center">
           <Button

@@ -7,7 +7,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { user, isAuth, loading } = useSelector((state) => state.user);
 
-  useEffect(() => {
+   useEffect(() => {
     if (!isAuth) {
       dispatch(profile());
     }
@@ -15,7 +15,7 @@ const Profile = () => {
 
   if (loading) {
     return <div>Loading...</div>;
-  }
+  } 
 
   return (
     <div className="min-h-screen">
